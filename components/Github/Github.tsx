@@ -20,7 +20,6 @@ import {
 import { UserStats } from "@/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import html2canvas from "html2canvas";
 import { Button } from "../ui/button";
 import { ArrowDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
@@ -66,7 +65,7 @@ const Github = () => {
         <motion.div
           ref={githubRef}
           id="github-ss"
-          className="text-white w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 relative pt-[3.5rem]"
+          className="text-white w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 relative pt-[3.5rem] "
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -145,13 +144,13 @@ const Github = () => {
           </div>
         </motion.div>
       )}
-      <Button
+      {!loading && <Button
         onClick={handleDownloadImage}
-        className="border-zinc-200/20 bg-zinc-800/20 rounded-full py-6 absolute bottom-0 right-0 group"
+        className="border-zinc-200/20 bg-zinc-800/20 rounded-full py-6 absolute bottom-1 right-1 group"
       >
         <ArrowDown size={18} />
-        <p className="font-modernreg text-zinc-400 max-lg:border border-zinc-200/20 max-lg:bg-primary/90 max-lg:p-1 max-lg:text-white/90 px-2 max-lg:px-3 max-lg:rounded-lg bottom-0 right-14 max-lg:absolute lg:flex translate-x-2 max-lg:opacity-0 max-lg:group-hover:opacity-100 max-lg:group-hover:translate-x-0 duration-500 lg:group-hover:text-white/80">Download Bento</p>
-      </Button>
+        <p className="font-modernreg text-zinc-400 max-xl:border border-zinc-200/20 max-xl:bg-primary/90 max-xl:p-1 max-xl:text-white/90 px-2 max-xl:px-3 max-xl:rounded-lg bottom-0 right-14 max-xl:absolute lg:flex translate-x-2 max-xl:opacity-0 max-xl:group-hover:opacity-100 max-xl:group-hover:translate-x-0 duration-500 lg:group-hover:text-white/80">Download Bento</p>
+      </Button>}
     </div>
   );
 };
