@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "@/Providers/Providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const modernBold = localFont({
   src: "./fonts/modern-bold.otf",
@@ -34,7 +35,11 @@ export default function RootLayout({
       <body
         className={`${modernBold.variable} ${modernMono.variable} ${modernReg.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

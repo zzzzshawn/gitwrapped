@@ -35,19 +35,19 @@ const Github = () => {
   }, [loading]);
 
   return (
-    <motion.div
-      ref={githubRef}
-      className="text-white w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 min-h-[90vh]] relative"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <>
       {!loading && (
-        <>
-          <div className="flex items-center justify-center gap-4 px-10 mb-2">
+        <motion.div
+          ref={githubRef}
+          className="text-white w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 relative pt-[3.5rem]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-center justify-center gap-4 sm:px-10 px-3  mb-2">
             <div className="">
               <Image
-                src={userStats.AvatarUrl || '/assets/user.svg'}
+                src={userStats.AvatarUrl || "/assets/user.svg"}
                 alt="User Avatar"
                 width={100}
                 height={100}
@@ -55,7 +55,8 @@ const Github = () => {
               />
             </div>
             <h1 className="font-modernbold leading-tight text-3xl max-w-2xl py-1">
-              {userStats.Repositories ? username : "User not found"} {userStats.Repositories && '&apos;s Github.'}
+              {userStats.Repositories ? username : "User not found"}{" "}
+              {userStats.Repositories && "'s Github."}
             </h1>
           </div>
           <div className="grid grid-cols-4 grid-rows-4   md:grid-cols-8 md:grid-rows-4 gap-2 w-full md:h-[600px]  max-sm:min-h-[100vh]   ">
@@ -115,9 +116,9 @@ const Github = () => {
               ></div>
             </div>
           </div>
-        </>
+        </motion.div>
       )}
-    </motion.div>
+    </>
   );
 };
 

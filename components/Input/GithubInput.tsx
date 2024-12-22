@@ -11,15 +11,20 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 import { useSetRecoilState } from "recoil";
-import { graphState, loadingState, usernameState, userStatsState } from "@/Recoil/State/atom";
+import {
+  graphState,
+  loadingState,
+  usernameState,
+  userStatsState,
+} from "@/Recoil/State/atom";
 import fetchUser from "@/actions/fetchUser";
 import fetchGraph from "@/actions/fetchGraph";
+import { toast } from "@/hooks/use-toast";
 
 const githubInputSchema = z.object({
   username: z.string().min(2).max(50),
@@ -27,7 +32,7 @@ const githubInputSchema = z.object({
 
 const GithubInput = () => {
   const setUsername = useSetRecoilState(usernameState);
-  const setLoading = useSetRecoilState(loadingState);
+  const  setLoading = useSetRecoilState(loadingState);
   const setUserStats = useSetRecoilState(userStatsState);
   const setGraphState = useSetRecoilState(graphState);
 
@@ -40,13 +45,22 @@ const GithubInput = () => {
 
   async function onSubmit(values: z.infer<typeof githubInputSchema>) {
     setLoading(true);
+    toast({ title: "Generating", generating: true });    
     setUsername(values.username);
     const { userStats } = await fetchUser(values.username);
     const graph = await fetchGraph(values.username);
+    console.log(userStats, graph);
     setUserStats(userStats);
     setGraphState(graph);
     setLoading(false);
-    
+    if (graph.graph === "No contributions this year") {
+      toast({
+        title: "User not found",
+        description: "Please check your username",
+      });
+    } else {
+      toast({title: "Gitwrapped generated"});
+    }
   }
   return (
     <div className="">
@@ -56,18 +70,18 @@ const GithubInput = () => {
             control={form.control}
             name="username"
             render={({ field }) => (
-              <FormItem className="font-modernreg ">
-                <FormLabel className="text-zinc-100/80">Username</FormLabel>
+              <FormItem className="font-modernreg">
+                {/* <FormLabel className="text-zinc-100/80">Username</FormLabel> */}
                 <FormControl>
-                  <Input placeholder="Eg. zzzzshawn" {...field} />
+                  <Input placeholder="Eg. zzzzshawn" {...field} className="bg-zinc-800/20 backdrop-blur-xl backdrop-saturate-200" />
                 </FormControl>
-                <FormDescription>Enter your Github username</FormDescription>
+                <FormDescription className="text-white/90 font-modernmono">Enter your Github username</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           <Button
-            className="absolute top-9 right-1 p-2 backdrop-blur-xl backdrop-saturate-200 "
+            className="absolute top-1 right-1 p-2 text-white "
             type="submit"
           >
             <ArrowRight />
