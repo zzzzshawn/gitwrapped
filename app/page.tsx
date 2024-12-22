@@ -9,7 +9,7 @@ export default async function Home() {
     <div className="w-full min-h-screen mx-auto p-5 max-sm:p-0 flex flex-col items-center justify-center overflow-hidden relative">
         <Link
           href={`https://github.com/zzzzshawn`}
-          className="cursor-pointer flex items-center justify-start gap-2 z-10 w-full font-modernmono text-zinc-500 hover:text-white/60"
+          className="cursor-pointer flex items-center justify-start gap-2 z-10 w-full font-modernmono text-zinc-600 hover:text-white/60 px-5"
         >
           <h1>GitWrapped by @zzzzshawn </h1>
           <GithubIcon size={18} />

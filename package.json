@@ -16,8 +16,10 @@
     "@radix-ui/react-toast": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dom-to-image": "^2.6.0",
     "dotenv": "^16.4.7",
     "framer-motion": "^11.15.0",
+    "html2canvas": "^1.4.1",
     "lucide-react": "^0.469.0",
     "next": "14.2.21",
     "react": "^18",
@@ -27,9 +29,11 @@
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "use-react-screenshot": "^4.0.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/dom-to-image": "^2.6.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
