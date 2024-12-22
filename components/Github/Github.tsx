@@ -24,6 +24,8 @@ import html2canvas from "html2canvas";
 import { Button } from "../ui/button";
 import { ArrowDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { toPng } from 'html-to-image';
+
 
 
 const Github = () => {
@@ -36,20 +38,20 @@ const Github = () => {
 
   const handleDownloadImage = async () => {
     toast({title: "Downloading Bento", generating: true})
-    if (githubRef.current) {
-      const canvas = await html2canvas(githubRef.current, {
-        scale: 2.5, 
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null,
-    });
-      const dataURL = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = `${username || "github-stats"}.png`;
-      link.click();
-      toast({title: 'Bento Downloaded'})
-    }
+
+    const node = document.getElementById('github-ss') as HTMLElement;
+    toPng(node)
+        .then((dataUrl) => {
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = `${username}.png`;
+            link.click();
+            toast({title: 'Bento Downloaded'})
+        })
+        .catch((error) => {
+            console.error('Oops, something went wrong!', error);
+        });
+    
   };
 
   useEffect(() => {
@@ -63,6 +65,7 @@ const Github = () => {
       {!loading && (
         <motion.div
           ref={githubRef}
+          id="github-ss"
           className="text-white w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 relative pt-[3.5rem]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
