@@ -19,7 +19,6 @@ import {
   userStatsState,
 } from "@/Recoil/State/atom";
 import { UserStats } from "@/types";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { ArrowDown } from "lucide-react";
@@ -173,14 +172,10 @@ const Github = () => {
           </Select>
         </div>
       )}
-      <div id="github-ss" className="relative w-full">
+      <div id="github-ss" ref={githubRef} className="relative w-full flex items-center justify-center bg-none">
         {!loading && (
-          <motion.div
-            ref={githubRef}
+          <div
             className="text-white z-10 w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 relative pt-[3.5rem] "
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
           >
             <div className="flex items-center justify-center gap-4 sm:px-10 px-3  mb-2">
               <div className="">
@@ -254,7 +249,7 @@ const Github = () => {
                 ></div>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
         </div>
       {!loading && (
