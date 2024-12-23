@@ -91,7 +91,7 @@ const Github = () => {
   }, [loading]);
 
   return (
-    <div className="relative size-full">
+    <div className="relative w-full overflow-visible bg-red-500">
       {!loading && <div className="absolute top-10 z-20 right-0 max-sm:right-[4.2rem] max-sm:top-2">
         <Select
           onValueChange={(value) => {
@@ -241,7 +241,7 @@ const Github = () => {
               Contribution Graph:
             </h1>
           </div>
-          <div className="px-5 rounded-2xl w-full mx-auto flex flex-col relative overflow-auto">
+          <div className="px-5 border rounded-2xl w-full mx-auto flex flex-col relative overflow-auto">
             <div className="relative max-w-2xl mx-auto">
               <div
                 className="bg-zinc-800/20 backdrop-blur-2xl border border-zinc-200/10 backdrop-saturate-200 p-3 rounded-2xl mx-auto overflow-auto max-w-2xl opacity-95 hover:opacity-100 z-[9999] cursor-pointer"
