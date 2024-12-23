@@ -101,7 +101,7 @@ const Github = () => {
               pineapple: "/assets/grad5.svg",
             };
             setSelectedImage(imageMap[value]); 
-            setBackground(`${imageMap[value]}`)
+            setBackground(`https://gitwrapped-psi.vercel.app/public${imageMap[value]}`)
           }}
         >
           <SelectTrigger className="p-2 relative rounded-full overflow-hidden">
