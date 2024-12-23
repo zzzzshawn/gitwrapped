@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
             })
             .toBuffer();
 
-        const background = sharp(`public/${backgroundPath}`);
+        const background = sharp(`${backgroundPath}`);
         const resizedBackground = await background.resize(width! + 2 * padding, height).toBuffer();
 
         const processedImageBuffer = await sharp(resizedBackground)
