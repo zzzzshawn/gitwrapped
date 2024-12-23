@@ -100,7 +100,6 @@ const Github = () => {
                 banana: "assets/frame7.svg",
                 blueberry: "assets/frame9.svg",
                 grapes: "assets/black.png",
-                pineapple: "assets/grad5.svg",
               };
               setSelectedImage(`/${imageMap[value]}`);
               setBackground(`${imageMap[value]}`);
@@ -150,16 +149,6 @@ const Github = () => {
                   {" "}
                   <Image
                     src={`/assets/black.png`}
-                    alt=""
-                    width={100}
-                    height={100}
-                    className="size-7 rounded-full object-cover"
-                  />
-                </SelectItem>
-                <SelectItem value="pineapple">
-                  {" "}
-                  <Image
-                    src={`/assets/grad5.svg`}
                     alt=""
                     width={100}
                     height={100}
