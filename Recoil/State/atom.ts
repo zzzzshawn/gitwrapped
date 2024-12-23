@@ -23,5 +23,5 @@ export const graphState = atom<any>({
 
 export const backgroundState = atom<string>({
   key: 'backgroundState',
-  default: "app/assets/black.png"
+  default: "https://gitwrapped-psi.vercel.app/assets/black.png"
 })
