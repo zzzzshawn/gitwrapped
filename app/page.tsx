@@ -14,14 +14,14 @@ export default async function Home() {
           <h1>GitWrapped by @zzzzshawn </h1>
           <GithubIcon size={18} />
         </Link>
-      {/* <Image
+      <Image
         src={`/assets/grad1.svg`}
         alt=""
         width={500}
         height={500}
         className="absolute object-cover inset-0 size-full opacity-40"
         priority
-      /> */}
+      />
       <div className="h-[92vh] w-full flex items-center justify-center">
         <GithubInput />
       </div>
