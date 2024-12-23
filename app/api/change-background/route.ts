@@ -1,10 +1,15 @@
 import sharp from 'sharp';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
+import path from 'path';
+
 
 export const POST = async (req: NextRequest) => {
     try {
         const { foregroundPath, backgroundPath } = await req.json();
+
+        const resolvedBackgroundPath = path.join(process.cwd(), 'public', backgroundPath);
+
 
         const foregroundBuffer = Buffer.from(foregroundPath, 'base64');
         const foreground = sharp(foregroundBuffer);
@@ -22,7 +27,7 @@ export const POST = async (req: NextRequest) => {
             })
             .toBuffer();
 
-        const background = sharp(`${backgroundPath}`);
+        const background = sharp(resolvedBackgroundPath);
         const resizedBackground = await background.resize(width! + 2 * padding, height).toBuffer();
 
         const processedImageBuffer = await sharp(resizedBackground)
