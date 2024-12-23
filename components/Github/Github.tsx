@@ -63,6 +63,7 @@ const Github = () => {
             backgroundPath: background,
           }),
         });
+        toast({ title: "Downloading...", generating: true });
         if (response.ok) {
           const data = await response.blob();
           const link = document.createElement("a");
