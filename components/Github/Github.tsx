@@ -23,7 +23,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { ArrowDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import { toJpeg } from "html-to-image";
+import { toPng } from "html-to-image";
 import {
   Select,
   SelectContent,
@@ -38,8 +38,7 @@ const Github = () => {
   const loading = useRecoilValue(loadingState);
   const username = useRecoilValue(usernameState);
   const [background, setBackground] = useRecoilState(backgroundState);
-  const [selectedImage, setSelectedImage] =
-    useState<string>("/assets/black.png");
+  const [selectedImage, setSelectedImage] = useState<string>("/assets/black.png");
 
   const githubRef = useRef<HTMLDivElement | null>(null);
 
@@ -49,7 +48,7 @@ const Github = () => {
     const node = document.getElementById("github-ss") as HTMLElement;
     if (!node) return toast({ title: "Failed to find element." });
 
-    toJpeg(node, { quality: 0.95 })
+    toPng(node, { quality: 0.91 })
       .then(async (dataUrl) => {
         const base64Data = dataUrl.split(",")[1];
         toast({ title: "Downloading...", generating: true });
@@ -172,7 +171,7 @@ const Github = () => {
           </Select>
         </div>
       )}
-      <div id="github-ss" ref={githubRef} className="relative w-full flex items-center justify-center bg-none">
+      <div id="github-ss" ref={githubRef} className="relative w-full flex items-center justify-center bg-transparent">
         {!loading && (
           <div
             className="text-white z-10 w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 relative pt-[3.5rem] "

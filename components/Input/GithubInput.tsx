@@ -49,7 +49,6 @@ const GithubInput = () => {
     setUsername(values.username);
     const { userStats } = await fetchUser(values.username);
     const graph = await fetchGraph(values.username);
-    console.log(userStats, graph);
     setUserStats(userStats);
     setGraphState(graph);
     setLoading(false);
