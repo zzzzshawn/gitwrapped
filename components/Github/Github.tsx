@@ -74,7 +74,7 @@ const Github = () => {
           URL.revokeObjectURL(url);
           toast({ title: "Bento Downloaded Successfully" });
         } else {
-          toast({ title: "Error: Image generation failed." });
+          toast({ title: "Error: Slow Internet" });
         }
       })
       .catch((error) => {
