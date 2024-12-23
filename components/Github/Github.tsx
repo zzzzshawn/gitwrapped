@@ -48,7 +48,7 @@ const Github = () => {
     const node = document.getElementById("github-ss") as HTMLElement;
     if (!node) return toast({ title: "Failed to find element." });
 
-    toPng(node, { quality: 0.91 })
+    toPng(node, { quality: 0.89 })
       .then(async (dataUrl) => {
         const base64Data = dataUrl.split(",")[1];
         toast({ title: "Downloading...", generating: true });
