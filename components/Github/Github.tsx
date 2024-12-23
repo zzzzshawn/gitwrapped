@@ -46,7 +46,7 @@ const Github = () => {
   const handleDownloadImage = async () => {
     toast({ title: "Starting Download...", generating: true });
 
-    const node = document.getElementById("github-ss") as HTMLElement;
+    const node = githubRef.current
     if (!node) return toast({ title: "Failed to find element." });
 
     toPng(node)
@@ -69,6 +69,7 @@ const Github = () => {
           const link = document.createElement("a");
           const url = URL.createObjectURL(data)
           link.href = url;
+          toast({ title: "Downloading...", generating: true });
           link.download = `${username || "user"}.png`;
           link.click();
           URL.revokeObjectURL(url);

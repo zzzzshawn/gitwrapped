@@ -1,41 +1,28 @@
 import sharp from 'sharp';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
-import path from 'path';
-
 
 export const POST = async (req: NextRequest) => {
     try {
-        const { foregroundPath, backgroundPath } = await req.json();
+        const { foregroundPath } = await req.json();  // Only take the foreground path
 
-        const resolvedBackgroundPath = path.join(process.cwd(), 'public', backgroundPath);
-
-
+        // Convert the base64 encoded foreground into a buffer
         const foregroundBuffer = Buffer.from(foregroundPath, 'base64');
         const foreground = sharp(foregroundBuffer);
 
+        // Get the metadata of the foreground (width and height)
         const { width, height } = await foreground.metadata();
+        console.log(width, height);  // Log the width and height of the foreground image
 
-        const padding = 270; 
-        const paddedForeground = await foreground
-            .extend({
-                top: 0,
-                bottom: 0,
-                left: padding,
-                right: padding,
-                background: { r: 255, g: 255, b: 255, alpha: 0 }, 
-            })
+        // Process the foreground image (no background, no padding)
+        const processedImageBuffer = await foreground
+            .resize(width, height) // You can resize if needed, or just pass the original dimensions
             .toBuffer();
 
-        const background = sharp(resolvedBackgroundPath);
-        const resizedBackground = await background.resize(width! + 2 * padding, height).toBuffer();
-
-        const processedImageBuffer = await sharp(resizedBackground)
-            .composite([{ input: paddedForeground, blend: 'over' }])
-            .toBuffer();
-
+        // Generate a unique name for the output image
         const uniqueName = `${uuidv4()}.png`;
 
+        // Return the processed image as a downloadable file
         return new NextResponse(processedImageBuffer, {
             status: 200,
             headers: {
