@@ -14,7 +14,6 @@ const Commit = ({
     <div
       className={`${classname} flex items-center justify-center flex-col gap-3 relative rounded-3xl overflow-hidden bg-black/90 z-[90]  group cursor-pointer`}
     >
-      {/* <HalfCircleGradient  /> */}
       <Image
         src={`/assets/grad2.svg`}
         alt=""
@@ -24,7 +23,7 @@ const Commit = ({
       />
       <div className="absolute top-5 left-5">
         <Command className="size-10" />
-        <p className="font-modernbold lg:text-xl pt-1">
+        <p className="font-modernbold text-xl pt-1">
           Total <br /> Commits
         </p>
       </div>

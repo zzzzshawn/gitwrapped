@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Followers from "./Github Components/Followers";
 import LongestStreak from "./Github Components/LongestStreak";
 import Stars from "./Github Components/Stars";
@@ -10,8 +10,9 @@ import Commit from "./Github Components/Commits";
 import PRs from "./Github Components/PRs";
 import Issues from "./Github Components/Issues";
 import ContributedTo from "./Github Components/ContributedTo";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
+  backgroundState,
   graphState,
   loadingState,
   usernameState,
@@ -23,34 +24,62 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { ArrowDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import { toPng } from 'html-to-image';
-
-
+import { toPng } from "html-to-image";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 
 const Github = () => {
   const userStats = useRecoilValue(userStatsState) as UserStats;
   const graph = useRecoilValue(graphState);
   const loading = useRecoilValue(loadingState);
   const username = useRecoilValue(usernameState);
+  const [background, setBackground] = useRecoilState(backgroundState)
+  const [selectedImage, setSelectedImage] = useState<string>("/assets/black.png")
 
   const githubRef = useRef<HTMLDivElement | null>(null);
 
   const handleDownloadImage = async () => {
-    toast({title: "Downloading Bento", generating: true})
+    toast({ title: "Starting Download...", generating: true });
 
-    const node = document.getElementById('github-ss') as HTMLElement;
+    const node = document.getElementById("github-ss") as HTMLElement;
+    if (!node) return toast({ title: "Failed to find element." });
+
     toPng(node)
-        .then((dataUrl) => {
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = `${username}.png`;
-            link.click();
-            toast({title: 'Bento Downloaded'})
-        })
-        .catch((error) => {
-            console.error('Oops, something went wrong!', error);
+      .then(async (dataUrl) => {
+        const base64Data = dataUrl.split(",")[1];
+        toast({ title: "Downloading...", generating: true });
+        const response = await fetch("/api/change-background", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            foregroundPath: base64Data,
+            backgroundPath: background,
+          }),
         });
-    
+        if (response.ok) {
+          const data = await response.blob();
+          const link = document.createElement("a");
+          const url = URL.createObjectURL(data)
+          link.href = url;
+          link.download = `${username || "user"}.png`;
+          link.click();
+          URL.revokeObjectURL(url);
+          toast({ title: "Bento Downloaded Successfully" });
+        } else {
+          toast({ title: "Error: Image generation failed." });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast({ title: "Error occurred while downloading." });
+      });
   };
 
   useEffect(() => {
@@ -61,11 +90,89 @@ const Github = () => {
 
   return (
     <div className="relative size-full">
+      {!loading && <div className="absolute top-10 z-20 right-0 max-sm:right-[4.2rem] max-sm:top-2">
+        <Select
+          onValueChange={(value) => {
+            const imageMap: Record<string, string> = {
+              apple: "/assets/frame2.svg",
+              banana: "/assets/frame7.svg",
+              blueberry: "/assets/frame9.svg",
+              grapes: "/assets/black.png",
+              pineapple: "/assets/grad5.svg",
+            };
+            setSelectedImage(imageMap[value]); 
+            setBackground(`public/${imageMap[value]}`)
+          }}
+        >
+          <SelectTrigger className="p-2 relative rounded-full overflow-hidden">
+          <Image
+            src={selectedImage} // Dynamically show the selected image
+            alt="Selected"
+            width={100}
+            height={100}
+            className="size-7 rounded-full object-cover"
+          />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="apple">
+                <Image
+                  src={`/assets/frame2.svg`}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="size-7 rounded-full object-cover"
+                />
+              </SelectItem>
+              <SelectItem value="banana">
+                {" "}
+                <Image
+                  src={`/assets/frame7.svg`}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="size-7 rounded-full object-cover"
+                />
+              </SelectItem>
+              <SelectItem value="blueberry">
+                {" "}
+                <Image
+                  src={`/assets/frame9.svg`}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="size-7 rounded-full object-cover"
+                />
+              </SelectItem>
+              <SelectItem value="grapes">
+                {" "}
+                <Image
+                  src={`/assets/black.png`}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="size-7 rounded-full object-cover"
+                />
+              </SelectItem>
+              <SelectItem value="pineapple">
+                {" "}
+                <Image
+                  src={`/assets/grad5.svg`}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="size-7 rounded-full object-cover"
+                />
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>}
       {!loading && (
         <motion.div
           ref={githubRef}
           id="github-ss"
-          className="text-white w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 relative pt-[3.5rem] "
+          className="text-white z-10 w-full lg:w-[100%] max-w-6xl mx-auto flex items-start justify-start flex-col p-3 relative pt-[3.5rem] "
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -144,16 +251,19 @@ const Github = () => {
           </div>
         </motion.div>
       )}
-      {!loading && <Button
-        onClick={handleDownloadImage}
-        className="border-zinc-200/20 bg-zinc-800/20 rounded-full py-6 absolute bottom-1 right-1 group"
-      >
-        <ArrowDown size={18} />
-        <p className="font-modernreg text-zinc-400 max-xl:border border-zinc-200/20 max-xl:bg-primary/90 max-xl:p-1 max-xl:text-white/90 px-2 max-xl:px-3 max-xl:rounded-lg bottom-0 right-14 max-xl:absolute lg:flex translate-x-2 max-xl:opacity-0 max-xl:group-hover:opacity-100 max-xl:group-hover:translate-x-0 duration-500 lg:group-hover:text-white/80">Download Bento</p>
-      </Button>}
+      {!loading && (
+        <Button
+          onClick={handleDownloadImage}
+          className="border-zinc-200/20 bg-zinc-800/20 rounded-full py-6 absolute bottom-1 right-1 group z-20 max-sm:top-2 max-sm:right-3" 
+        >
+          <ArrowDown size={18} />
+          <p className="font-modernreg text-zinc-400 max-xl:border border-zinc-200/20 max-xl:bg-primary/90 max-xl:p-1 max-xl:text-white/90 px-2 max-xl:px-3 max-xl:rounded-lg bottom-14 right-1 max-xl:absolute lg:flex max-lg:translate-y-2 max-xl:opacity-0 max-xl:group-hover:opacity-100 max-xl:group-hover:translate-y-0 duration-150 lg:group-hover:text-white/80">
+            Download Bento
+          </p>
+        </Button>
+      )}
     </div>
   );
 };
 
 export default Github;
-

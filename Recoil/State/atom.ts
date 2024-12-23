@@ -20,3 +20,8 @@ export const graphState = atom<any>({
   key: 'graphState',
   default: null,
 });
+
+export const backgroundState = atom<string>({
+  key: 'backgroundState',
+  default: "public/assets/black.png"
+})

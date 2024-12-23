@@ -18,7 +18,7 @@ const Repos = ({ repos, classname }: { repos: number; classname: string }) => {
       />
       <div className="absolute top-3 left-3">
         <BookMarked className="size-10" />
-        <p className="font-modernbold lg:text-xl pt-1">Repos<span className="max-sm:hidden">itories</span></p>
+        <p className="font-modernbold text-lg lg:text-xl pt-1">Repos<span className="max-sm:hidden">itories</span></p>
       </div>
       <p className={` font-modernbold absolute bottom-5 right-3 text-7xl max-lg:text-6xl max-sm:text-4xl ${formatNumber(repos).toString().length >= 4 ? "max-sm:right-1": ""} `}>
         {formatNumber(repos)}
