@@ -22,6 +22,7 @@ const LongestStreak = ({
             alt=""
             width={500}
             height={500}
+            priority
             className="size-full object-cover absolute inset-0 -z-10 rounded-2xl group-hover:opacity-100 opacity-[0.88] cursor-pointer"
         />
         <p className="font-modernbold text-lg lg:text-xl">Longest Streak</p>

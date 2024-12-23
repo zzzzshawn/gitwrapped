@@ -20,6 +20,7 @@ export default async function Home() {
         width={500}
         height={500}
         className="absolute object-cover inset-0 size-full opacity-40"
+        priority
       />
       <svg
         className="pointer-events-none isolate z-[999999] size-full absolute inset-0 opacity-30 mix-blend-soft-light"

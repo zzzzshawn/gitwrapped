@@ -23,6 +23,7 @@ const CurrentStreak = ({
         alt=""
         width={500}
         height={500}
+        priority
         className="size-full object-cover absolute inset-0 top-1 -z-10 rounded-2xl opacity-80 group-hover:opacity-100"
       />
       <div className="relative items-center justify-center">

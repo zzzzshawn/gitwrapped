@@ -21,6 +21,7 @@ const PRs = ({ pr, classname }: { pr: number; classname: string }) => {
           alt=""
           width={100}
           height={100}
+          priority
           className="size-10"
         />
         <p className="font-modernbold lg:text-xl pt-1">PRs</p>

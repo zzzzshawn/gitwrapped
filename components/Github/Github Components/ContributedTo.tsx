@@ -20,6 +20,7 @@ const ContributedTo = ({
         alt=""
         width={500}
         height={500}
+        priority
         className="size-full object-cover absolute inset-0 -z-10 rounded-xl opacity-70 group-hover:opacity-100 object-left-bottom max-sm:object-right-top"
       />
       <div className="absolute top-3 left-3 max-sm:top-2 max-sm:left-2 max-lg:flex max-md:block gap-2" >
