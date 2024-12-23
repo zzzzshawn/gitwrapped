@@ -94,14 +94,14 @@ const Github = () => {
         <Select
           onValueChange={(value) => {
             const imageMap: Record<string, string> = {
-              apple: "/assets/frame2.svg",
-              banana: "/assets/frame7.svg",
-              blueberry: "/assets/frame9.svg",
-              grapes: "/assets/black.png",
-              pineapple: "/assets/grad5.svg",
+              apple: "assets/frame2.svg",
+              banana: "assets/frame7.svg",
+              blueberry: "assets/frame9.svg",
+              grapes: "assets/black.png",
+              pineapple: "assets/grad5.svg",
             };
-            setSelectedImage(imageMap[value]); 
-            setBackground(`https://gitwrapped-psi.vercel.app${imageMap[value]}`)
+            setSelectedImage(`/${imageMap[value]}`); 
+            setBackground(`${imageMap[value]}`)
           }}
         >
           <SelectTrigger className="p-2 relative rounded-full overflow-hidden">
