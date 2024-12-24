@@ -85,22 +85,20 @@ export const calculateCurrentStreak = (
   let currentStreak = 0;
   let streakStartDate: string | null = null;
   let streakEndDate: string | null = null;
-  let now = new Date();
-  now.setHours(0, 0, 0, 0);
+  let lastDate = new Date(); 
 
   for (let i = contributionDays.length - 1; i >= 0; i--) {
     const currentDate = new Date(contributionDays[i].date);
-    currentDate.setHours(0, 0, 0, 0);
     const dayDifference =
-      (now.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
+      (lastDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
 
-    if (contributionDays[i].contributionCount > 0 && dayDifference >= 0) {
-      if (!currentStreak) streakStartDate = contributionDays[i].date;
+    if (contributionDays[i].contributionCount > 0 && dayDifference <= 1) {
+      if (!currentStreak) streakStartDate = contributionDays[i].date; 
       currentStreak++;
-      streakEndDate = contributionDays[i].date;
-      now = currentDate;
+      streakEndDate = contributionDays[i].date; 
+      lastDate = currentDate; 
     } else if (dayDifference > 1) {
-      break;
+      break; 
     }
   }
 
