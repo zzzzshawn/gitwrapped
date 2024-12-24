@@ -33,7 +33,7 @@ const CurrentStreak = ({
       <p className=" font-modernbold text-lg lg:text-xl ">Current Streak</p>
       <p className="font-modernbold text-7xl  ">{formatNumber(streak)}</p>
       <p className="text-xs font-modernreg">
-        {streak > 0 ? <>{start} - {end}</> : "No current streak"}
+        {streak > 0 ? <>{end} - {start}</> : "No current streak"}
       </p>
     </div>
   );
